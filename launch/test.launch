@@ -1,0 +1,26 @@
+<launch>
+
+<param name="use_sim_time" type="bool" value="true" />
+
+<param name="publish_frequency" type="double" value="10.0" />
+
+  <arg name="map_file" default="$(find likelihood_field)/maps/map.yaml"/>
+  <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
+  <node name="compute_likelihood" pkg="likelihood_field" type="compute_likelihood.py">
+    <rosparam>
+      initial_pose_x: -1.0
+      initial_pose_y: -5.0
+      initial_pose_a: -0.4
+      initial_cov_xx: .25
+      initial_cov_yy: .25
+      initial_cov_aa: .07
+    </rosparam>
+  </node>
+
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find likelihood_field)/rviz/localization.rviz"/>
+
+
+  
+
+
+</launch>
